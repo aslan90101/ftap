@@ -1097,10 +1097,11 @@ buttonText.Text = Info.Text
 buttonText.TextColor3 = Color3.fromRGB(217, 217, 217)
 buttonText.TextSize = 11
 buttonText.TextXAlignment = Enum.TextXAlignment.Left
+buttonText.TextYAlignment = Enum.TextYAlignment.Center
 buttonText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 buttonText.BackgroundTransparency = 1
 buttonText.Position = UDim2.new(0.0488, 0, 0, 0)
-buttonText.Size = UDim2.new(1, 0, 0, 27)
+buttonText.Size = UDim2.new(1, 0, 1, 0)
 buttonText.Parent = button
 
 local textButton = Instance.new("TextButton")
@@ -1509,6 +1510,10 @@ dropdownContainer.BorderSizePixel = 0
 dropdownContainer.Size = UDim2.new(1, 0, 0, 27)
 dropdownContainer.Parent = dropdown
 dropdownContainer.Visible = true
+
+local dropdownContainerCorner = Instance.new("UICorner")
+dropdownContainerCorner.CornerRadius = UDim.new(0, 3)
+dropdownContainerCorner.Parent = dropdownContainer
 
 local dropdownuIListLayout = Instance.new("UIListLayout")
 dropdownuIListLayout.Name = "UIListLayout"
