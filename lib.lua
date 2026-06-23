@@ -731,7 +731,7 @@ sectionFrame.ChildAdded:Connect(function(v)
     local layout = sectionFrame:FindFirstChildOfClass("UIListLayout")
     local layoutPadding = layout and layout.Padding.Offset or 0
     local gapsH = math.max(0, childCount - 1) * layoutPadding
-    local frameH = 23 + contentH + gapsH
+    local frameH = 23 + contentH + gapsH + 3
     section.Size = UDim2.new(1, 0, 0, frameH + 12)
     sectionFrame.Size = UDim2.new(1, 0, 0, frameH)
 end)
@@ -757,7 +757,7 @@ uIPadding1.Name = "UIPadding"
 uIPadding1.PaddingTop = UDim.new(0, 23)
 uIPadding1.PaddingLeft = UDim.new(0, 3)
 uIPadding1.PaddingRight = UDim.new(0, 3)
-uIPadding1.PaddingBottom = UDim.new(0, 0)
+uIPadding1.PaddingBottom = UDim.new(0, 3)
 uIPadding1.Parent = sectionFrame
 
 local sectionName = Instance.new("TextLabel")
