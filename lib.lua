@@ -170,6 +170,7 @@ local window = {}
 local shamanScreenGui = Instance.new("ScreenGui")
 shamanScreenGui.Name = "Shaman"
 shamanScreenGui.Parent = CoreGui
+library.ScreenGui = shamanScreenGui
 
 local tooltipScreenGui = Instance.new("ScreenGui")
 tooltipScreenGui.Name = "Tooltips"
@@ -1967,5 +1968,12 @@ uIStroke2.Parent = main
 
 return window
 end
+
+game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
+    if input.KeyCode == Enum.KeyCode.M then
+        if not library.ScreenGui then return end
+        library.ScreenGui.Enabled = not library.ScreenGui.Enabled
+    end
+end)
 
 return library
