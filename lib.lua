@@ -688,8 +688,6 @@ function tab:Section(Info)
 Info.Text = Info.Text or "Section"
 Info.Side = Info.Side or "Left"
 
-local SizeY = 23
-
 local sectiontable = {}
 
 local Side
@@ -718,15 +716,20 @@ sectionFrame.Size = UDim2.new(1, 0, 0, 23)
 sectionFrame.Parent = section
 
 sectionFrame.ChildAdded:Connect(function(v)
-    if v.ClassName == "Frame" then
-        if v.Name == "Slider" then
-        SizeY = SizeY + 40
-        else
-        SizeY = SizeY + 27
+    local contentH = 0
+    local childCount = 0
+    for _, child in sectionFrame:GetChildren() do
+        if child:IsA("Frame") then
+            contentH = contentH + child.Size.Y.Offset
+            childCount = childCount + 1
         end
     end
-    TweenService:Create(section, TweenInfo.new(.1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {Size = UDim2.new(1, 0, 0, SizeY + 12)}):Play()
-    TweenService:Create(sectionFrame, TweenInfo.new(.1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {Size = UDim2.new(1, 0, 0, SizeY)}):Play()
+    local layout = sectionFrame:FindFirstChildOfClass("UIListLayout")
+    local layoutPadding = layout and layout.Padding.Offset or 0
+    local gapsH = math.max(0, childCount - 1) * layoutPadding
+    local frameH = 23 + contentH + gapsH
+    section.Size = UDim2.new(1, 0, 0, frameH + 12)
+    sectionFrame.Size = UDim2.new(1, 0, 0, frameH)
 end)
 
 local uIStroke3 = Instance.new("UIStroke")
