@@ -1459,7 +1459,6 @@ dropdown.BackgroundTransparency = 1
 dropdown.Position = UDim2.new(0, 0, 0.638, 0)
 dropdown.Size = UDim2.new(1, 0, 0, 27)
 dropdown.Parent = sectionFrame
-dropdown.ClipsDescendants = true
 
 if Info.Tooltip ~= "" then
     AddTooltip(dropdown, Info.Tooltip)
@@ -1487,7 +1486,7 @@ dropdownIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 dropdownIcon.BackgroundTransparency = 1
 dropdownIcon.Rotation = -90
 dropdownIcon.Position = UDim2.new(1, -13, 0, 13)
-dropdownIcon.Size = UDim2.new(0, 10, 0, 10)
+dropdownIcon.Size = UDim2.new(0, 13, 0, 13)
 dropdownIcon.ZIndex = 2
 dropdownIcon.Parent = dropdown
 
@@ -1508,6 +1507,7 @@ dropdownContainer.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 dropdownContainer.BackgroundTransparency = 1
 dropdownContainer.BorderSizePixel = 0
 dropdownContainer.Size = UDim2.new(1, 0, 0, 27)
+dropdownContainer.ClipsDescendants = true
 dropdownContainer.Parent = dropdown
 dropdownContainer.Visible = true
 
