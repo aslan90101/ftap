@@ -952,10 +952,15 @@ local buttontable = {}
     
 local button = Instance.new("Frame")
 button.Name = "Button"
-button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-button.BackgroundTransparency = 1
+button.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+button.BackgroundTransparency = 0.5
 button.Size = UDim2.new(0, 162, 0, 27)
 button.Parent = sectionFrame
+Instance.new("UICorner", button).CornerRadius = UDim.new(0, 3)
+local buttonStroke = Instance.new("UIStroke")
+buttonStroke.Color = Color3.fromRGB(55, 55, 55)
+buttonStroke.Thickness = 1
+buttonStroke.Parent = button
 
 if Info.Tooltip ~= "" then
     AddTooltip(button, Info.Tooltip)
