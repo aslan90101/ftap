@@ -652,7 +652,9 @@ uIListLayout2.Parent = leftContainer
 local uIPadding2 = Instance.new("UIPadding")
 uIPadding2.Name = "UIPadding"
 uIPadding2.PaddingLeft = UDim.new(0, 4)
+uIPadding2.PaddingRight = UDim.new(0, 4)
 uIPadding2.PaddingTop = UDim.new(0, 3)
+uIPadding2.PaddingBottom = UDim.new(0, 3)
 uIPadding2.Parent = leftContainer
 
 local rightContainer = Instance.new("ScrollingFrame")
@@ -675,8 +677,10 @@ uIListLayout3.Parent = rightContainer
 
 local uIPadding3 = Instance.new("UIPadding")
 uIPadding3.Name = "UIPadding"
-uIPadding3.PaddingLeft = UDim.new(0, 2)
+uIPadding3.PaddingLeft = UDim.new(0, 4)
+uIPadding3.PaddingRight = UDim.new(0, 4)
 uIPadding3.PaddingTop = UDim.new(0, 3)
+uIPadding3.PaddingBottom = UDim.new(0, 3)
 uIPadding3.Parent = rightContainer
 
 local uICorner8 = Instance.new("UICorner")
@@ -726,8 +730,10 @@ sectionFrame.ChildAdded:Connect(function(v)
     end
     local layout = sectionFrame:FindFirstChildOfClass("UIListLayout")
     local layoutPadding = layout and layout.Padding.Offset or 0
+    local pad = sectionFrame:FindFirstChildOfClass("UIPadding")
+    local padBottom = pad and pad.PaddingBottom.Offset or 0
     local gapsH = math.max(0, childCount - 1) * layoutPadding
-    local frameH = 23 + contentH + gapsH
+    local frameH = 23 + contentH + gapsH + padBottom
     section.Size = UDim2.new(1, 0, 0, frameH + 12)
     sectionFrame.Size = UDim2.new(1, 0, 0, frameH)
 end)
@@ -753,6 +759,7 @@ uIPadding1.Name = "UIPadding"
 uIPadding1.PaddingTop = UDim.new(0, 23)
 uIPadding1.PaddingLeft = UDim.new(0, 3)
 uIPadding1.PaddingRight = UDim.new(0, 3)
+uIPadding1.PaddingBottom = UDim.new(0, 6)
 uIPadding1.Parent = sectionFrame
 
 local sectionName = Instance.new("TextLabel")
