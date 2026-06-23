@@ -742,11 +742,14 @@ uICorner7.Parent = sectionFrame
 local uIListLayout1 = Instance.new("UIListLayout")
 uIListLayout1.Name = "UIListLayout"
 uIListLayout1.SortOrder = Enum.SortOrder.LayoutOrder
+uIListLayout1.Padding = UDim.new(0, 4)
 uIListLayout1.Parent = sectionFrame
 
 local uIPadding1 = Instance.new("UIPadding")
 uIPadding1.Name = "UIPadding"
 uIPadding1.PaddingTop = UDim.new(0, 23)
+uIPadding1.PaddingLeft = UDim.new(0, 3)
+uIPadding1.PaddingRight = UDim.new(0, 3)
 uIPadding1.Parent = sectionFrame
 
 local sectionName = Instance.new("TextLabel")
