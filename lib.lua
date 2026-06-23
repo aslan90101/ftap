@@ -848,8 +848,11 @@ Info.Text = Info.Text or "Keybind"
 Info.Default = Info.Default or Enum.KeyCode.F4
 Info.Callback = Info.Callback or function() end
 Info.Tooltip = Info.Tooltip or ""
+Info.Mode = Info.Mode or "Toggle"
 
 local PressKey = Info.Default
+local Mode = Info.Mode
+local Holding = false
 
 local keybind = Instance.new("Frame")
 keybind.Name = "Keybind"
@@ -922,9 +925,98 @@ keybindFrame.Size = UDim2.new(0, TextBounds.X + 10, 0, 15)
 
 keybindFrameText:GetPropertyChangedSignal("Text"):Connect(function()
     TextBounds = keybindFrameText.TextBounds
-    
     keybindFrame.Size = UDim2.new(0, TextBounds.X + 10, 0, 15)
 end)
+
+local function createModeMenu()
+    local existing = keybind:FindFirstChild("ModeMenu")
+    if existing then existing:Destroy() end
+
+    local menuFrame = Instance.new("Frame")
+    menuFrame.Name = "ModeMenu"
+    menuFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    menuFrame.BorderSizePixel = 0
+    menuFrame.Position = UDim2.new(1, 0, 1, 2)
+    menuFrame.ZIndex = 100
+    menuFrame.Parent = keybind
+
+    local menuCorner = Instance.new("UICorner")
+    menuCorner.CornerRadius = UDim.new(0, 4)
+    menuCorner.Parent = menuFrame
+
+    local menuStroke = Instance.new("UIStroke")
+    menuStroke.Color = Color3.fromRGB(60, 60, 60)
+    menuStroke.Parent = menuFrame
+
+    local menuLayout = Instance.new("UIListLayout")
+    menuLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    menuLayout.Padding = UDim.new(0, 1)
+    menuLayout.Parent = menuFrame
+
+    local function makeOption(text, order)
+        local optBtn = Instance.new("TextButton")
+        optBtn.Name = text
+        optBtn.Font = Enum.Font.GothamBold
+        optBtn.Text = text
+        optBtn.TextColor3 = Mode == text and Color3.fromRGB(100, 180, 255) or Color3.fromRGB(180, 180, 180)
+        optBtn.TextSize = 10
+        optBtn.BackgroundColor3 = Mode == text and Color3.fromRGB(40, 40, 50) or Color3.fromRGB(35, 35, 35)
+        optBtn.BackgroundTransparency = 0
+        optBtn.Size = UDim2.new(0, 60, 0, 20)
+        optBtn.LayoutOrder = order
+        optBtn.ZIndex = 101
+        optBtn.Parent = menuFrame
+
+        local optCorner = Instance.new("UICorner")
+        optCorner.CornerRadius = UDim.new(0, 3)
+        optCorner.Parent = optBtn
+
+        optBtn.MouseButton1Click:Connect(function()
+            Mode = text
+            menuFrame:Destroy()
+        end)
+
+        optBtn.MouseEnter:Connect(function()
+            if Mode ~= text then
+                optBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 55)
+            end
+        end)
+        optBtn.MouseLeave:Connect(function()
+            if Mode ~= text then
+                optBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+            end
+        end)
+    end
+
+    makeOption("Toggle", 1)
+    makeOption("Hold", 2)
+
+    local totalH = 20 * 2 + 1
+    menuFrame.Size = UDim2.new(0, 60, 0, totalH)
+
+    task.defer(function()
+        local sg = menuFrame:FindFirstAncestorWhichIsA("ScreenGui")
+        if sg then
+            local conn
+            conn = sg.InputBegan:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.MouseButton2 then
+                    if menuFrame and menuFrame.Parent then
+                        local absPos = menuFrame.AbsolutePosition
+                        local absSize = menuFrame.AbsoluteSize
+                        local pos = input.Position
+                        local insideMenu = pos.X >= absPos.X and pos.X <= absPos.X + absSize.X and pos.Y >= absPos.Y and pos.Y <= absPos.Y + absSize.Y
+                        if not insideMenu then
+                            menuFrame:Destroy()
+                            if conn then conn:Disconnect() end
+                        end
+                    else
+                        if conn then conn:Disconnect() end
+                    end
+                end
+            end)
+        end
+    end)
+end
 
 local KeybindConnection
 local Changing = false
@@ -944,10 +1036,30 @@ keybindButton.MouseButton1Click:Connect(function()
     end)
 end)
 
+keybindButton.MouseButton2Click:Connect(function()
+    createModeMenu()
+end)
+
 UserInputService.InputBegan:Connect(function(Key, gameProcessed)
     if not Changing and Key.KeyCode == PressKey and not gameProcessed then
+        if Mode == "Toggle" then
+            task.spawn(function()
+                pcall(Info.Callback)
+            end)
+        elseif Mode == "Hold" then
+            Holding = true
+            task.spawn(function()
+                pcall(Info.Callback, true)
+            end)
+        end
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(Key, gameProcessed)
+    if Key.KeyCode == PressKey and Mode == "Hold" and Holding then
+        Holding = false
         task.spawn(function()
-            pcall(Info.Callback)
+            pcall(Info.Callback, false)
         end)
     end
 end)
