@@ -884,7 +884,7 @@ keybindFrame.Name = "KeybindFrame"
 keybindFrame.BackgroundColor3 = Color3.fromRGB(68, 68, 68)
 keybindFrame.AnchorPoint = Vector2.new(1, 0)
 keybindFrame.BorderSizePixel = 0
-keybindFrame.Position = UDim2.new(0.95, 0, 0.222, 0)
+keybindFrame.Position = UDim2.new(1, -5, 0, 6)
 keybindFrame.Size = UDim2.new(0, 30, 0, 15)
 keybindFrame.Parent = keybind
 
