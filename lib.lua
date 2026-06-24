@@ -1336,7 +1336,7 @@ sliderText.TextSize = 11
 sliderText.TextXAlignment = Enum.TextXAlignment.Left
 sliderText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 sliderText.BackgroundTransparency = 1
-sliderText.Position = UDim2.new(0.0488, 0, 0, 0)
+sliderText.Position = UDim2.new(0.05, 0, 0, 0)
 sliderText.Size = UDim2.new(1, 0, 0, 27)
 sliderText.Parent = slider
 
@@ -1344,8 +1344,8 @@ local outerSlider = Instance.new("Frame")
 outerSlider.Name = "OuterSlider"
 outerSlider.BackgroundColor3 = Color3.fromRGB(68, 68, 68)
 outerSlider.BorderSizePixel = 0
-outerSlider.Position = UDim2.new(0.049, -1, 0.664, 0)
-outerSlider.Size = UDim2.new(0.95, 0, 0, 4)
+outerSlider.Position = UDim2.new(0.05, 0, 0.664, 0)
+outerSlider.Size = UDim2.new(0.9, 0, 0, 4)
 outerSlider.Parent = slider
 
 local sliderCorner = Instance.new("UICorner")
@@ -1377,8 +1377,8 @@ sliderValueText.TextSize = 11
 sliderValueText.TextXAlignment = Enum.TextXAlignment.Right
 sliderValueText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 sliderValueText.BackgroundTransparency = 1
-sliderValueText.Position = UDim2.new(0.0488, 0, 0, 0)
-sliderValueText.Size = UDim2.new(0.95, 0, 0, 27)
+sliderValueText.Position = UDim2.new(0.05, 0, 0, 0)
+sliderValueText.Size = UDim2.new(0.9, 0, 0, 27)
 sliderValueText.Parent = slider
 
 local sliderButton = Instance.new("TextButton")
@@ -1389,8 +1389,8 @@ sliderButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 sliderButton.TextSize = 14
 sliderButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 sliderButton.BackgroundTransparency = 1
-sliderButton.Position = UDim2.new(0.049, 0, 0.664, 0)
-sliderButton.Size = UDim2.new(0.95, 0, 0, 4)
+sliderButton.Position = UDim2.new(0.05, 0, 0.664, 0)
+sliderButton.Size = UDim2.new(0.9, 0, 0, 4)
 sliderButton.Parent = slider
 
 task.spawn(function()
