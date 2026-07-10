@@ -973,39 +973,49 @@ local JustClicked = false
 
 keybindButton.MouseButton1Click:Connect(function()
     if KeybindConnection then KeybindConnection:Disconnect() end
-    Changing = true
-    library.ChangingKeybind = true
+    library.ChangingKeybind = false
+    Changing = false
     JustClicked = true
     task.delay(0, function() JustClicked = false end)
+    Changing = true
+    library.ChangingKeybind = true
+    task.delay(2, function()
+        if library.ChangingKeybind then
+            library.ChangingKeybind = false
+            Changing = false
+        end
+    end)
     keybindFrameText.Text = "..."
     KeybindConnection = UserInputService.InputBegan:Connect(function(Key, gameProcessed)
         if JustClicked then return end
         if Key.UserInputType == Enum.UserInputType.MouseButton1 then return end
         if Key.UserInputType == Enum.UserInputType.MouseMovement then return end
         KeybindConnection:Disconnect()
-        if Key.KeyCode == Enum.KeyCode.Escape then
-            keybindFrameText.Text = ""
-            PressKey = Enum.KeyCode.Unknown
-            PressInputType = nil
-            if Info.Flag ~= nil then
-                library.Flags[Info.Flag] = {Key = "", Mode = Mode}
+        pcall(function()
+            if Key.KeyCode == Enum.KeyCode.Escape then
+                keybindFrameText.Text = ""
+                PressKey = Enum.KeyCode.Unknown
+                PressInputType = nil
+                if Info.Flag ~= nil then
+                    library.Flags[Info.Flag] = {Key = "", Mode = Mode}
+                end
+            elseif Key.UserInputType ~= Enum.UserInputType.Keyboard then
+                local typeName = Key.UserInputType.Name
+                keybindFrameText.Text = typeName
+                PressKey = Enum.KeyCode.Unknown
+                PressInputType = Key.UserInputType
+                if Info.Flag ~= nil then
+                    library.Flags[Info.Flag] = {Key = typeName, Mode = Mode}
+                end
+            elseif Key.KeyCode ~= Enum.KeyCode.Unknown then
+                keybindFrameText.Text = Key.KeyCode.Name
+                PressKey = Key.KeyCode
+                PressInputType = nil
+                if Info.Flag ~= nil then
+                    library.Flags[Info.Flag] = {Key = Key.KeyCode.Name, Mode = Mode}
+                end
             end
-        elseif Key.UserInputType ~= Enum.UserInputType.Keyboard then
-            local typeName = Key.UserInputType.Name
-            keybindFrameText.Text = typeName
-            PressKey = Enum.KeyCode.Unknown
-            PressInputType = Key.UserInputType
-            if Info.Flag ~= nil then
-                library.Flags[Info.Flag] = {Key = typeName, Mode = Mode}
-            end
-        elseif Key.KeyCode ~= Enum.KeyCode.Unknown then
-            keybindFrameText.Text = Key.KeyCode.Name
-            PressKey = Key.KeyCode
-            PressInputType = nil
-            if Info.Flag ~= nil then
-                library.Flags[Info.Flag] = {Key = Key.KeyCode.Name, Mode = Mode}
-            end
-        end
+        end)
         task.delay(0.15, function()
             Changing = false
             library.ChangingKeybind = false
