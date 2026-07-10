@@ -1020,7 +1020,7 @@ end)
 UserInputService.InputBegan:Connect(function(Key, gameProcessed)
     if Changing then return end
     if library.ChangingKeybind then return end
-    if gameProcessed then return end
+    if gameProcessed and not Info.BypassGameProcessed then return end
     local matched = false
     if PressInputType and Key.UserInputType == PressInputType then
         matched = true
