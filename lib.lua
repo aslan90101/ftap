@@ -2086,10 +2086,6 @@ return window
 end
 
 game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
-    if input.KeyCode == Enum.KeyCode.M then
-        if not library.ScreenGui then return end
-        library.ScreenGui.Enabled = not library.ScreenGui.Enabled
-    end
     if not gameProcessed and input.UserInputType == Enum.UserInputType.MouseButton1 then
         local mouse = game.Players.LocalPlayer:GetMouse()
         local target = mouse.Target
